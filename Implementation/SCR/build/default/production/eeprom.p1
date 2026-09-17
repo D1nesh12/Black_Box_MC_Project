@@ -1,0 +1,105 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"6 ./i2c.h
+[; ;./i2c.h: 6: void i2c_start(void);
+[v _i2c_start `(v ~T0 @X0 0 ef ]
+"9
+[; ;./i2c.h: 9: void i2c_write(unsigned char data);
+[v _i2c_write `(v ~T0 @X0 0 ef1`uc ]
+"8
+[; ;./i2c.h: 8: void i2c_stop(void);
+[v _i2c_stop `(v ~T0 @X0 0 ef ]
+"7
+[; ;./i2c.h: 7: void i2c_rep_start(void);
+[v _i2c_rep_start `(v ~T0 @X0 0 ef ]
+"10
+[; ;./i2c.h: 10: unsigned char i2c_read(void);
+[v _i2c_read `(uc ~T0 @X0 0 ef ]
+"6 eeprom.c
+[; ;eeprom.c: 6: void write_eeprom(unsigned char addr, unsigned char data)
+[v _write_eeprom `(v ~T0 @X0 1 ef2`uc`uc ]
+"7
+[; ;eeprom.c: 7: {
+{
+[e :U _write_eeprom ]
+"6
+[; ;eeprom.c: 6: void write_eeprom(unsigned char addr, unsigned char data)
+[v _addr `uc ~T0 @X0 1 r1 ]
+[v _data `uc ~T0 @X0 1 r2 ]
+"7
+[; ;eeprom.c: 7: {
+[f ]
+"8
+[; ;eeprom.c: 8:  i2c_start();
+[e ( _i2c_start ..  ]
+"9
+[; ;eeprom.c: 9:  i2c_write(0xA0);
+[e ( _i2c_write (1 -> -> 160 `i `uc ]
+"10
+[; ;eeprom.c: 10:  i2c_write(addr);
+[e ( _i2c_write (1 _addr ]
+"11
+[; ;eeprom.c: 11:  i2c_write(data);
+[e ( _i2c_write (1 _data ]
+"12
+[; ;eeprom.c: 12:  i2c_stop();
+[e ( _i2c_stop ..  ]
+"13
+[; ;eeprom.c: 13:  for(int i = 3000; i--;);
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 3000 `i ]
+[e $U 5  ]
+[e :U 2 ]
+[e :U 5 ]
+[e $ != -- _i -> 1 `i -> 0 `i 2  ]
+[e :U 3 ]
+}
+"14
+[; ;eeprom.c: 14: }
+[e :UE 1 ]
+}
+"16
+[; ;eeprom.c: 16: unsigned char read_eeprom(unsigned char address)
+[v _read_eeprom `(uc ~T0 @X0 1 ef1`uc ]
+"17
+[; ;eeprom.c: 17: {
+{
+[e :U _read_eeprom ]
+"16
+[; ;eeprom.c: 16: unsigned char read_eeprom(unsigned char address)
+[v _address `uc ~T0 @X0 1 r1 ]
+"17
+[; ;eeprom.c: 17: {
+[f ]
+"18
+[; ;eeprom.c: 18:  unsigned char data;
+[v _data `uc ~T0 @X0 1 a ]
+"20
+[; ;eeprom.c: 20:  i2c_start();
+[e ( _i2c_start ..  ]
+"21
+[; ;eeprom.c: 21:  i2c_write(0xA0);
+[e ( _i2c_write (1 -> -> 160 `i `uc ]
+"22
+[; ;eeprom.c: 22:  i2c_write(address);
+[e ( _i2c_write (1 _address ]
+"23
+[; ;eeprom.c: 23:  i2c_rep_start();
+[e ( _i2c_rep_start ..  ]
+"24
+[; ;eeprom.c: 24:  i2c_write(0xA1);
+[e ( _i2c_write (1 -> -> 161 `i `uc ]
+"25
+[; ;eeprom.c: 25:  data = i2c_read();
+[e = _data ( _i2c_read ..  ]
+"26
+[; ;eeprom.c: 26:  i2c_stop();
+[e ( _i2c_stop ..  ]
+"28
+[; ;eeprom.c: 28:  return data;
+[e ) _data ]
+[e $UE 6  ]
+"29
+[; ;eeprom.c: 29: }
+[e :UE 6 ]
+}
